@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "paths": {
+      "@shop": [
+        "./shop"
+      ],
+      "@shop/*": [
+        "./shop/*"
+      ]
+    }
+  }
+}
