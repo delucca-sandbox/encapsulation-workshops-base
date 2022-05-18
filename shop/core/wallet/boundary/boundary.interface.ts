@@ -1,6 +1,9 @@
-import { NewWalletDTO } from '@shop/core/wallet/boundary/dtos';
-import { Wallet } from '@shop/core/wallet/domain';
+import { CreatedWalletDTO, NewWalletDTO } from './dtos';
 
 export interface WalletBoundary {
-  createSingleWallet(properties: NewWalletDTO): Wallet;
+  createSingleWallet(properties: NewWalletDTO): CreatedWalletDTO;
+
+  withdraw(walletId: string, amount: number): void;
+
+  getBalance(walletId: string): number;
 }

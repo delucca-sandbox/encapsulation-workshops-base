@@ -1,21 +1,29 @@
-import shop from '@shop';
+import { Wallet } from '@shop/core';
 import { defineFeature, loadFeature } from 'jest-cucumber';
 
 const feature = loadFeature('shop/specs/features/01-withdraw-money.feature');
 
 defineFeature(feature, (test) => {
-  test('Withdraw money from the wallet', ({ given, when, then, and }) => {
-    given('There is a wallet with $5', () => {
-      const wallet = shop.wallet.createOne({ balance: 5 });
+  const wallet = new Wallet();
 
-      console.log(wallet);
+  test('Withdraw money from the wallet', ({ given, when, then, and }) => {
+    let walletID: string;
+
+    given('There is a wallet with $5', () => {
+      const newWallet = wallet.createSingleWallet({ balance: 5 });
+      walletID = newWallet.id;
     });
 
-    when('I withdraw the money $2 from the wallet', () => {});
+    when('I withdraw the money $2 from the wallet', () => {
+      wallet.withdraw(walletID, 2);
+    });
 
     then('I have $2 in money', () => {});
 
-    and('$3 is left in the wallet', () => {});
+    and('$3 is left in the wallet', () => {
+      const balance = wallet.getBalance(walletID);
+      expect(balance).toBe(3);
+    });
   });
 
   test('Can not withdraw money from the wallet if there is not enough founds', ({

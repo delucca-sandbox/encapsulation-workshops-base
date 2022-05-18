@@ -1,1 +1,1 @@
-export * from './wallet';
+export { DefaultWalletBoundary as Wallet } from './wallet';

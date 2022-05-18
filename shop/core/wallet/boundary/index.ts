@@ -1,2 +1,2 @@
-export * from './boundary.interface'
-export * from './default.boundary'
+export * from './boundary.interface';
+export * from './default.boundary';

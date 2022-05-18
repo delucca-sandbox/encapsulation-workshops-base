@@ -1,12 +1,13 @@
-import { Exception, ValueObject } from '@shop/core/common';
-import uuid from 'uuid';
+import { Exception } from '@shop/common/exceptions';
+import { ValueObject } from '@shop/common/value-objects';
+import { v4 as generateUUID, validate as validateUUID } from 'uuid';
 
 type IDProperties = {
   value?: string;
 };
 
 export class ID extends ValueObject<IDProperties> {
-  public constructor(properties: IDProperties) {
+  public constructor(properties: IDProperties = {}) {
     super(properties);
 
     if (!properties.value) this.flush();
@@ -18,11 +19,11 @@ export class ID extends ValueObject<IDProperties> {
   }
 
   private flush(): void {
-    this.properties.value = uuid.v4();
+    this.properties.value = generateUUID();
   }
 
   private validate(): void {
-    const isValid = uuid.validate(this.properties.value);
+    const isValid = validateUUID(this.properties.value);
 
     if (!isValid) {
       throw new InvalidIDException(this.properties.value);
